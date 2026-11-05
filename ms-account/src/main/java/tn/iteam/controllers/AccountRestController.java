@@ -1,35 +1,45 @@
+
 package tn.iteam.controllers;
 
-
-import jakarta.ws.rs.PathParam;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.iteam.entities.Account;
-import tn.iteam.services.AccountService;
 
+import tn.iteam.bridges.CustomerClientFeign;
+import tn.iteam.entities.Account;
+import tn.iteam.models.Customer;
+import tn.iteam.services.AccountService;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/accounts")
 public class AccountRestController {
-    // Faire appel a la couche service
+    // Faire appel à la couche Service
     @Autowired
-    private  AccountService accountService;
+    private AccountService accountService;
+    @Autowired
+    private CustomerClientFeign customerClientFeign;
 
-    @GetMapping("/accounts")
+
+    // Get all accounts
+    @GetMapping
     public List<Account> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
-    @GetMapping("/accounts/{id}")
+    // Get account by ID
+    @GetMapping("/{id}")
     public Account getAccountById(@PathVariable String id) {
-        return accountService.getAccountById(id);
+        Account account = accountService.getAccountById(id);
+        // Connect to MS CUSTOMER
+        Customer customer =    customerClientFeign.getCustomerById(account.getCustomerId());
+        account.setCustomer(customer);
+
+        return account;
     }
 
-    @PostMapping("/accounts")
+    // Save a new account
+    @PostMapping
     public void saveCustomer(@RequestBody Account account) {
         accountService.saveAccount(account);
     }

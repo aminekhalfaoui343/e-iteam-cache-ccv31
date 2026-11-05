@@ -3,6 +3,8 @@ package tn.iteam.controllers;
 
 import jakarta.ws.rs.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ import java.util.List;
 public class CustomerRestController {
     // Faire appel a la couche service
     private final CustomerService customerService;
+    @Autowired
+    private final Environment environment;
 
     @GetMapping("/customers")
     public List<Customer> getAllCustomers() {
@@ -27,8 +31,10 @@ public class CustomerRestController {
 
     @GetMapping("/customers/{id}")
     public CustomerDto getCustomerById(@PathVariable(name="id") Long id) {
-
-        return customerService.getCustomerById(id);
+        CustomerDto customer = customerService.getCustomerById(id);
+        String port = environment.getProperty("server.port");
+        customer.setEnvironment(port);
+        return customer;
     }
 
 
