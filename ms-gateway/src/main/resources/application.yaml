@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: "ms-gateway"
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: true
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: r1
+              uri:
+                lb://MS-CUSTOMER
+              predicates:
+                - Path=/customers/**
+            - id: r2
+              uri:
+                lb://MS-CUSTOMER
+              predicates:
+                - Path=/customers/**
+            - id: r3
+              uri:
+                lb://MS-ACCOUNT
+              predicates:
+                - Path=/accounts/**
+server:
+  port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: "http://localhost:8761/eureka/"
+  instance:
+    prefer-ip-address: true
+# static routing

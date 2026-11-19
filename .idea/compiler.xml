@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ms-discovery" />
+        <module name="ms-gateway" />
       </profile>
       <profile name="Annotation profile for ms-account" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -26,6 +27,7 @@
       <module name="ms-account" options="-parameters" />
       <module name="ms-customer" options="-parameters" />
       <module name="ms-discovery" options="-parameters" />
+      <module name="ms-gateway" options="-parameters" />
     </option>
   </component>
 </project>

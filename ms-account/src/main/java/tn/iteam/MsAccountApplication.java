@@ -28,20 +28,21 @@ public class MsAccountApplication {
 
             List<Account> accountList = List.of(
                     Account.builder()
-                            .accountId(UUID.randomUUID().toString())
+                            .accountId("ACC-001")
                             .currency("DTN")
-                            .balance(Math.random() * 90000)
+                            .balance(15000.0)
                             .createdAt(LocalDate.now())
                             .type(AccountType.CURRENT_ACCOUNT)
-                            .customerId(1L) // Simplification de Long.valueOf(1)
+                            .customerId(1L)
                             .build(),
+
                     Account.builder()
-                            .accountId(UUID.randomUUID().toString())
+                            .accountId("ACC-002")
                             .currency("DTN")
-                            .balance(Math.random() * 90000)
+                            .balance(25000.0)
                             .createdAt(LocalDate.now())
                             .type(AccountType.SAVING_ACCOUNT)
-                            .customerId(2L) // Simplification de Long.valueOf(2)
+                            .customerId(2L)
                             .build()
             );
 
